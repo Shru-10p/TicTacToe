@@ -40,4 +40,42 @@ class RandomComputerPlayer(Player):
         return square
 
 class GeniusComputerPlayer(Player):
-    pass
+    def __init__(self, letter):
+        super().__init__(letter)
+
+    def get_move(self, game: TicTacToe.Game):
+        if len(game.available_moves()) == 9 or 8:
+            square = random.randint(0,1000) % 9
+        else:
+            square = self.minimax(game, self.letter)
+        return square
+
+    def minimax(self, state:TicTacToe.Game, player:str)->int:
+        max_player = 'X' # maximizer is always X (who goes first)
+        other_player = 'O' if player == max_player else max_player
+
+        if state.current_winner == other_player:
+            return {'square': None, 'score': 1}
+        elif not state.empty_squares():
+            return {'square': None, 'score': 0}
+
+        if player == max_player:
+            best = {'square': None, 'score': -1000}
+        else:
+            best = {'square': None, 'score': 1000}
+
+        for move in state.available_moves():
+            state.make_move(move)
+            sim_score = self.minimax(state, other_player)
+
+            state.board[move] = ' '
+            state.current_winner = None
+            sim_score['square'] = move
+
+            if player == max_player:
+                if sim_score['score'] > best['score']:
+                    best = sim_score
+            else:
+                if sim_score['score'] < best['score']:
+                    best = sim_score
+        return best['square']

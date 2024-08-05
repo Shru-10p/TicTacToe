@@ -28,7 +28,8 @@ def menu():
     print('Choose your opponent:')
     print('1. Human')
     print('2. Random Computer')
-    print('3. None, i\'ve had enough.\n')
+    print('3. Genius Computer')
+    print('4. None, i\'ve had enough.\n')
     choice = input('Enter your choice: ')
     return choice
 
@@ -40,10 +41,36 @@ def main():
             player_2 = Players.HumanPlayer('O')
             play(TicTacToe.Game(), player_1, player_2)
         elif choice == '2':
-            player_1 = Players.HumanPlayer('X')
-            player_2 = Players.RandomComputerPlayer('O')
+            print('Choose X player:')
+            print('1. Human')
+            print('2. Random Computer')
+            X_choice = input('Enter your choice: ')
+            if X_choice == '1':
+                player_1 = Players.HumanPlayer('X')
+                player_2 = Players.RandomComputerPlayer('O')
+            elif X_choice == '2':
+                player_1 = Players.RandomComputerPlayer('X')
+                player_2 = Players.HumanPlayer('O')
+            else:
+                print('No Choice given. Exiting...')
+                continue
             play(TicTacToe.Game(), player_1, player_2)
         elif choice == '3':
+            print('Choose X player:')
+            print('1. Human')
+            print('2. Random Computer')
+            X_choice = input('Enter your choice: ')
+            if X_choice == '1':
+                player_1 = Players.HumanPlayer('X')
+                player_2 = Players.GeniusComputerPlayer('O')
+            elif X_choice == '2':
+                player_1 = Players.GeniusComputerPlayer('X')
+                player_2 = Players.HumanPlayer('O')
+            else:
+                print('No Choice given. Exiting...')
+                continue
+            play(TicTacToe.Game(), player_1, player_2)
+        elif choice == '4':
             print('\nThanks for playing!\n')
             break
         else:
